@@ -1,0 +1,5 @@
+# Remove bin folder
+bin/*
+
+# Remove class files
+*.class
