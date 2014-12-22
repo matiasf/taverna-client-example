@@ -4,6 +4,7 @@ taverna-client-example
 Example of a interaction with Taverna Server.
 
 The steps which are executed are:
+
 1) Push workflow
 2) Push inputs
 3) Set workflow on run
