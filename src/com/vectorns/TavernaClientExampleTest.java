@@ -23,12 +23,13 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.junit.Before;
 import org.junit.Test;
 
 public class TavernaClientExampleTest {
 
-	private static final String TAVERNA_REST_API_URL = "http://localhost:8080/taverna-server/rest";
+	// TODO: private static final String TAVERNA_REST_API_URL =
+	// "http://localhost:8080/taverna-server/rest";
+	private static final String TAVERNA_REST_API_URL = "http://localhost:9000/";
 	private static final String WORKFLOW_TEST_FILE = "WorkflowTesting1.t2flow";
 
 	private String getFileOnString(final String filePath) throws IOException {
@@ -48,11 +49,10 @@ public class TavernaClientExampleTest {
 		}
 	}
 
-	@Before
+	//TODO: Add this before to clean taverna server @Before
 	public void cleanServer() {
 		final CredentialsProvider credsProvider = new BasicCredentialsProvider();
-		credsProvider
-				.setCredentials(new AuthScope("localhost", 8080), new UsernamePasswordCredentials("taverna", "taverna"));
+		credsProvider.setCredentials(new AuthScope("localhost", 8080), new UsernamePasswordCredentials("taverna", "taverna"));
 		final CloseableHttpClient httpClient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
 
 		try {
@@ -64,12 +64,11 @@ public class TavernaClientExampleTest {
 			final String[] xmlParts = httpClient.execute(httpGet, new BasicResponseHandler()).split("/");
 			for (int i = 0; i < xmlParts.length; i++) {
 				if (xmlParts[i].equals("runs")) {
-					final HttpDelete httpDelete = new HttpDelete(TAVERNA_REST_API_URL + "/runs/"
-							+ xmlParts[i + 1].split("\"")[0]);
+					final HttpDelete httpDelete = new HttpDelete(TAVERNA_REST_API_URL + "/runs/" + xmlParts[i + 1].split("\"")[0]);
 					httpClient.execute(httpDelete);
 				}
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			fail();
 		}
 	}
@@ -77,10 +76,9 @@ public class TavernaClientExampleTest {
 	@Test
 	public void testPostRuns() throws UnsupportedEncodingException, IOException, InterruptedException {
 		final CredentialsProvider credsProvider = new BasicCredentialsProvider();
-		credsProvider
-				.setCredentials(new AuthScope("localhost", 8080), new UsernamePasswordCredentials("taverna", "taverna"));
-		final CloseableHttpClient httpClient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider)
-				.setMaxConnTotal(100).setMaxConnPerRoute(50).build();
+		credsProvider.setCredentials(new AuthScope("localhost", 8080), new UsernamePasswordCredentials("taverna", "taverna"));
+		final CloseableHttpClient httpClient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).setMaxConnTotal(100)
+				.setMaxConnPerRoute(50).build();
 
 		// Step 1
 		StringEntity reqEntity = new StringEntity(getFileOnString(WORKFLOW_TEST_FILE));
@@ -129,8 +127,7 @@ public class TavernaClientExampleTest {
 		// Step 5
 		final HttpGet httpGetOutputDescription = new HttpGet(TAVERNA_REST_API_URL + "/runs/" + workflowUUID + "/wd/out");
 		httpGetOutputDescription.setHeader("Accept", "application/xml");
-		final String[] outputDirectoryParts = httpClient.execute(httpGetOutputDescription, new BasicResponseHandler())
-				.split("/");
+		final String[] outputDirectoryParts = httpClient.execute(httpGetOutputDescription, new BasicResponseHandler()).split("/");
 		for (int i = 0; i < outputDirectoryParts.length; i++) {
 			if (outputDirectoryParts[i].equals("out")) {
 				final HttpGet httpGetOutput = new HttpGet(TAVERNA_REST_API_URL + "/runs/" + workflowUUID + "/wd/out/"
