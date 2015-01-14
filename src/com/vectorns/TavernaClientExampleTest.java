@@ -30,7 +30,7 @@ public class TavernaClientExampleTest {
 	// TODO: private static final String TAVERNA_REST_API_URL =
 	// "http://localhost:8080/taverna-server/rest";
 	private static final String TAVERNA_REST_API_URL = "http://localhost:9000/";
-	private static final String WORKFLOW_TEST_FILE = "WorkflowTesting1.t2flow";
+	private static final String WORKFLOW_TEST_FILE = "WorkflowTesting.t2flow";
 
 	private String getFileOnString(final String filePath) throws IOException {
 		final BufferedReader bufferReader = new BufferedReader(new FileReader(filePath));
