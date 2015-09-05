@@ -1,8 +1,12 @@
 <project name="test" default="test">
     <target name="test">
+    	<delete dir="out-test"/>
+    	<mkdir dir="out-test"/>
     	<javac destdir="out-test">
     		<src path="src"/>
     	</javac>
+    	<delete dir="report-out"/>
+        <mkdir dir="report-out"/>
         <junit printsummary="yes" haltonfailure="no">
             <classpath>
                 <path path="/usr/share/java/junit4.jar"/>
