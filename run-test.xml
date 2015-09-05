@@ -3,6 +3,7 @@
     	<delete dir="out-test"/>
     	<mkdir dir="out-test"/>
     	<javac destdir="out-test">
+    		<path path="/usr/share/java/junit4.jar"/>
     		<src path="src"/>
     	</javac>
     	<delete dir="report-out"/>
