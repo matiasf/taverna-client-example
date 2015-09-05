@@ -1,8 +1,12 @@
 <project name="test" default="test">
     <target name="test">
+    	<javac destdir="out-test">
+    		<src path="src"/>
+    	</javac>
         <junit printsummary="yes" haltonfailure="no">
             <classpath>
                 <path path="/usr/share/java/junit4.jar"/>
+                <path path="out-test"/>
             </classpath>
             <batchtest todir="report-out">
                 <formatter type="xml"/>
