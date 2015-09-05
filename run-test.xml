@@ -1,0 +1,15 @@
+<project name="test" default="test">
+    <target name="test">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath>
+                <path path="/usr/share/java/junit4.jar"/>
+            </classpath>
+            <batchtest todir="report-out">
+                <formatter type="xml"/>
+                <fileset dir="src">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+</project>
